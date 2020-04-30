@@ -8,6 +8,9 @@ slug = "certificacoes-carreira-ti"
 [taxonomies]
 categories = ["technology"]
 tags = ["itil", "cobit", "iso27k"]
+
+[extra]
+comments = true
 +++
 
 > Resumo: certificações não definem um bom profissional, mas facilitam a contratação.

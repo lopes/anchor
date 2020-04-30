@@ -8,6 +8,9 @@ slug = "apresentando-zola"
 [taxonomies]
 categories = ["technology"]
 tags = ["zola", "git", "rust"]
+
+[extra]
+comments = true
 +++
 
 > Resumo: este site usa o Zola e o código fonte está no GitHub.
