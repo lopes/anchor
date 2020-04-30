@@ -11,6 +11,7 @@ taxonomies = [
     {name = "tags", rss = true},
 ]
 
+
 [extra]
 author = "José Lopes"
 after_dark_menu = [
@@ -20,3 +21,5 @@ after_dark_menu = [
     {url = "$BASE_URL/tags", name = "Tags"},
 ]
 after_dark_title = "Lopes.id"
+ganalytics = "UA-60984303-2"
+
