@@ -35,4 +35,3 @@ $ git clone --recursive https://github.com/lopes/anchor
 Outra vantagem dessa abordagem é a publicação, que pode fazer uso de ferramentas de deploy automático, facilitando bastante a vida.  No meu caso, eu clono o repositório do GitHub, edito tudo no meu editor de textos, vejo como está ficando usando o próprio Zola, salvo, __commito__ e quando faço o push, a nova versão é empurrada para a produção automagicamente.
 
 Vamos em frente!
-

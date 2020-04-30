@@ -21,5 +21,5 @@ after_dark_menu = [
     {url = "$BASE_URL/tags", name = "Tags"},
 ]
 after_dark_title = "Lopes.id"
-ganalytics = "UA-60984303-2"
+ganalytics = "UA-165100411-1"
 
