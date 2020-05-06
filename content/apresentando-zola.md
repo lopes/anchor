@@ -1,6 +1,6 @@
 +++
 title = "Apresentando o Zola"
-description = "Porque eu uso o Zola e como criar um site nele"
+description = "Zola é um gerador simples e rápido de sites estáticos, que integra bem com GitHub e Netlify."
 date = 2020-04-27
 draft = false
 slug = "apresentando-zola"
@@ -13,11 +13,7 @@ tags = ["zola", "git", "rust"]
 comments = true
 +++
 
-> Resumo: este site usa o Zola e o código fonte está no GitHub.
-
 Por já ter trabalhado com gerenciadores de conteúdo como [Drupal](https://www.drupal.org/), [Wordpress](https://wordpress.org/) e até [PHP Nuke](https://en.wikipedia.org/wiki/PHP-Nuke) --esse entrega a idade--, sei como é complicado manter atualizações de segurança e lidar com sistemas PHP complexos, cheios de plugins com códigos desconhecidos, que põem em risco a segurança e o desempenho de qualquer portal.
-
-<!-- more -->
 
 Isso me fez dar muito valor a sites estáticos, tanto que eu consegui convencer um cliente, usando dados do Google Analytics, a migrar de um portal movido a Wordpress para um site estático feito com [Bootstrap](https://getbootstrap.com/).  Na época, por volta de 2015, eu fiz o site manualmente, mas lembro de me perguntar frequentemente como seria se fosse um site maior.
 

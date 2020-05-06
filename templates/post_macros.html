@@ -23,9 +23,9 @@
             </h2>
             <span class="muted">{{ self::meta(page=page) }}</span>
         </header>
-        {% if page.summary %}
+        {% if page.description %}
             <div itemprop="summary">
-                {{ page.summary | safe }}
+                {{ page.description | safe }}
                 <nav class="readmore"><a itemprop="url" href="{{ page.permalink | safe }}">Read More&nbsp;&raquo;</a></nav>
             </div>
         {% endif %}

@@ -1,23 +1,19 @@
 +++
 title = "Certificações e Carreira em TI"
-description = "Experiência e opiniões sobre certificações"
+description = "Se o estudo para as certificações for levado a sério, ele vale mais que o certificado."
 date = 2020-04-30
 draft = false
 slug = "certificacoes-carreira-ti"
 
 [taxonomies]
 categories = ["technology"]
-tags = ["itil", "cobit", "iso27k"]
+tags = ["cpe", "itil", "cobit", "iso27k"]
 
 [extra]
 comments = true
 +++
 
-> Resumo: certificações não definem um bom profissional, mas facilitam a contratação.
-
 Seleção de pessoal é um assunto extenso e que eu não domino.  Há muito o que se considerar, entre a titulação, experiência e outros atributos, mas neste texto quero passar minha visão sobre o assunto, com foco nos títulos, já que é um assunto que vez ou outra aparece nas discussões de trabalho.
-
-<!-- more -->
 
 No início da minha carreira profissional, acompanhei várias discussões em blogs e fóruns sobre a necessidade da educação formal e das certificações para profissionais de TI.  Particularmente, sempre fui adepto da educação formal, já que fiz faculdade e pós-graduação, mas não acreditava em certificações por causa de notícias desse tipo, em que um [menino de cinco anos conseguiu passar na prova da Microsoft](https://www.bbc.com/news/technology-30054140).
 
