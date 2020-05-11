@@ -4,4 +4,4 @@ Homepage for lopes.id, proudly built with [Zola](https://www.getzola.org/) and h
 
 Licensed under MIT license.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/60c05ab5-0717-4571-98a4-7b832d027d76/deploy-status)](https://app.netlify.com/sites/lopes/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1e2af009-2a44-4144-a435-1f032fd6c1f8/deploy-status)](https://app.netlify.com/sites/lopes/deploys)

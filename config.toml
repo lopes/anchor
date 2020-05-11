@@ -1,7 +1,7 @@
 base_url = "https://lopes.id"
 theme = "zola.386"
 
-default_language = "pt"
+default_language = "en"
 title = "lopes.id"
 description = "Treinado em campo de várzea."
 
@@ -29,18 +29,18 @@ zola386_menu = [
   {path="about", name="About"},
 ]
 
-# third party
+### THIRD PARTY
 google_analytics = "UA-165100411-1"
 disqus = "lopes-id"
 
-# social media
-image = ""
+### SOCIAL MEDIA
+# image = ""
 twitter_user = "lopesoj"
 linkedin_user = "jlopesjr"
 github_user = "lopes"
 # gitlab_user = ""
 
-# i18n words
+### I18N WORDS
 label_tags = "Tags"
 label_tag = "Tag"
 label_categories = "Categories"
@@ -50,4 +50,3 @@ label_date = "Date"
 label_taxonomy = "Taxonomy"
 label_reading = "Reading time"
 label_read_more = "Read more"
-label_welcome = "Welcome to "
