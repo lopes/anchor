@@ -1,25 +1,53 @@
 base_url = "https://lopes.id"
+theme = "zola.386"
+
+default_language = "pt"
+title = "lopes.id"
+description = "Treinado em campo de várzea."
+
+highlight_code = true
 compile_sass = true
-theme = "after-dark"
-title = "Lopes.id"
-description = "José Lopes' homepage"
-generate_categories_pages = true
-generate_tags_pages = true
+generate_rss = true
+build_search_index = true
 
 taxonomies = [
-    {name = "categories", rss = true},
-    {name = "tags", rss = true},
+  {name="categories", rss=true},
+  {name="tags", rss=true},
 ]
 
 
 [extra]
 author = "José Lopes"
-after_dark_menu = [
-    {url = "$BASE_URL", name = "Home"},
-    {url = "$BASE_URL/about", name = "About"},
-    {url = "$BASE_URL/categories", name = "Categories"},
-    {url = "$BASE_URL/tags", name = "Tags"},
-]
-after_dark_title = "Lopes.id"
-ganalytics = "UA-165100411-1"
+year = "2020"
 
+keywords = "technology, security, cybersecurity, infosec, ecology, plants, beer"
+theme_color = "#000084"
+zola386_menu = [
+  {path="/", name="Home"},
+  {path="categories", name="Categories"},
+  {path="tags", name="Tags"},
+  {path="about", name="About"},
+]
+
+# third party
+google_analytics = "UA-165100411-1"
+disqus = "lopes-id"
+
+# social media
+image = ""
+twitter_user = "lopesoj"
+linkedin_user = "jlopesjr"
+github_user = "lopes"
+# gitlab_user = ""
+
+# i18n words
+label_tags = "Tags"
+label_tag = "Tag"
+label_categories = "Categories"
+label_category = "Category"
+label_author = "Author"
+label_date = "Date"
+label_taxonomy = "Taxonomy"
+label_reading = "Reading time"
+label_read_more = "Read more"
+label_welcome = "Welcome to "

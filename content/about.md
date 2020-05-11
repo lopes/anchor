@@ -1,5 +1,16 @@
 +++
 title = "Sobre"
+description = "Sobre o autor."
+date = 2020-04-26
+draft = false
+slug = "about"
+
+[taxonomies]
+categories = ["technology"]
+tags = ["author"]
+
+[extra]
+comments = true
 +++
 
 Oi, eu sou o José Lopes!  Criei este blog para compartilhar um pouco dos assuntos de meu interesse, para servir como um repositório central para mim e para quem venha a se interessar também.
