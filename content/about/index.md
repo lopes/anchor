@@ -1,16 +1,8 @@
 +++
 title = "Sobre"
 description = "Sobre o autor."
-date = 2020-04-26
 draft = false
 slug = "about"
-
-[taxonomies]
-categories = ["technology"]
-tags = ["author"]
-
-[extra]
-comments = true
 +++
 
 Oi, eu sou o José Lopes!  Criei este blog para compartilhar um pouco dos assuntos de meu interesse, para servir como um repositório central para mim e para quem venha a se interessar também.
@@ -25,5 +17,19 @@ Você pode me encontrar nas redes sociais abaixo, para trocarmos mais ideias:
 - [Twitter](https://twitter.com/lopesoj)
 - [Linkedin](https://www.linkedin.com/in/jlopesjr)
 
-Bora!
+## Brasão
 
+Não sou um estudioso de heráldica, mas acho essa arte muito bonita, tanto que resolvi criar um brasão próprio para me representar, que tornei o símbolo desse site.
+
+![Coat of Arms](coa-jose-lopes.png)
+
+Esse brasão tem uma simbologia, como a heráldica pede:
+
+- O escudo é Ibérico, região de origem da minha família --até onde sei.
+- O escudo é coberto por esmaltes nas cores argento e gules, representando o estado de Minas Gerais, onde nasci.
+- O lobo é representa a família Lopes, nome que significa "filho do lobo", derivado do latim, "lupus" (lobo).
+- O pinheiro representa minha família por parte de mãe, com sobrenome homônimo.
+- A rosa representa minha cidade natal, Barbacena, também conhecida como "cidade das rosas".
+- A rosa amarela com folhas verdes representa minha pátria, o Brasil.
+
+Bora!
