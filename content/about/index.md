@@ -21,7 +21,7 @@ Você pode me encontrar nas redes sociais abaixo, para trocarmos mais ideias:
 
 Não sou um estudioso de heráldica, mas acho essa arte muito bonita, tanto que resolvi criar um brasão próprio para me representar, que tornei o símbolo desse site.
 
-![Coat of Arms](coa-jose-lopes.png)
+{{ resize_image(path="about/coa-jose-lopes.png", caption="Coat of Arms: José Lopes.") }}
 
 Esse brasão tem uma simbologia, como a heráldica pede:
 

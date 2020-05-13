@@ -39,6 +39,12 @@ $ git pull origin master
 
 Como o submódulo também é um repositório Git, rodar esse comando forçará o git a atualizar o submódulo (repositório).  Isso irá requerer um novo *commit* no repositório principal para gravar a atualização.  Com isso é possível ter o repositório principal e o submódulo em versões diferentes.
 
+A partir do Git 1.8 já [é possível executar o comando abaixo](https://stackoverflow.com/questions/8191299/update-a-submodule-to-the-latest-commit), de dentro da raiz do repositório principal, que é mais conveniente, mas ainda exige um novo *commit* para atualizar o ponteiro SHA-1 de versão.
+
+```bash
+$ git submodule update --remote --merge
+```
+
 ## Remoção do Submódulo
 
 Para remover o módulo, é só executar o comando abaixo de dentro do repositório principal, lembrando de substituir `zola.386` pelo nome do módulo:
