@@ -11,6 +11,7 @@ tags = ["cpe", "sec+", "review", "udemy"]
 
 [extra]
 comments = true
+lang = "pt"
 +++
 
 No fim de 2019, a empresa onde eu trabalho ofereceu um curso preparatório para a certificação [CompTIA Security+](https://www.comptia.org/certifications/security) (S+), com direito a um *voucher* para o exame.  Até então, essa era uma das certificações que eu planejava pedir para os contratados do SOC, mas achei uma ótima oportunidade de fazer a prova e ver por mim mesmo se fazia sentido.

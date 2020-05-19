@@ -11,6 +11,7 @@ tags = ["cpe", "itil", "cobit", "iso27k"]
 
 [extra]
 comments = true
+lang = "pt"
 +++
 
 Seleção de pessoal é um assunto extenso e que eu não domino.  Há muito o que se considerar, entre a titulação, experiência e outros atributos, mas neste texto quero passar minha visão sobre o assunto, com foco nos títulos, já que é um assunto que vez ou outra aparece nas discussões de trabalho.

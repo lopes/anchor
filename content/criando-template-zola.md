@@ -11,6 +11,7 @@ tags = ["oss", "review", "zola", "tera", "html", "css", "js", "bootstrap", "web"
 
 [extra]
 comments = true
+lang = "pt"
 +++
 
 O [Zola](https://www.getzola.org/) tem um subsistema simples e robusto para criação de templates, o  [Tera](https://tera.netlify.app/), que é baseado no [Jinja2](https://palletsprojects.com/p/jinja/) e no [Django](https://www.djangoproject.com/).  Apesar disso, provavelmente por não ser um projeto muito difundido [ainda], o Zola não tem muitos temas disponíveis, o que obriga o administrador a colocar a mão na massa.

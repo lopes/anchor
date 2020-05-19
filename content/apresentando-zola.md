@@ -11,6 +11,7 @@ tags = ["oss", "zola", "git", "rust"]
 
 [extra]
 comments = true
+lang = "pt"
 +++
 
 Por já ter trabalhado com gerenciadores de conteúdo como [Drupal](https://www.drupal.org/), [Wordpress](https://wordpress.org/) e até [PHP Nuke](https://en.wikipedia.org/wiki/PHP-Nuke) --esse entrega a idade--, sei como é complicado manter atualizações de segurança e lidar com sistemas PHP complexos, cheios de plugins com códigos desconhecidos, que põem em risco a segurança e o desempenho de qualquer portal.

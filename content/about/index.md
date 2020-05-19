@@ -19,17 +19,19 @@ Você pode me encontrar nas redes sociais abaixo, para trocarmos mais ideias:
 
 ## Brasão
 
-Não sou um estudioso de heráldica, mas acho essa arte muito bonita, tanto que resolvi criar um brasão próprio para me representar, que tornei o símbolo desse site.
+Não sou um estudioso de heráldica, mas mas gosto muito dessa arte.  Então, resolvi criar um brasão próprio para me representar, que tornei o símbolo desse site.
 
-{{ resize_image(path="about/coa-jose-lopes.png", caption="Coat of Arms: José Lopes.") }}
+{{ resize_image(path="about/coa-jlopes.png", caption="Coat of Arms: José Lopes.") }}
 
 Esse brasão tem uma simbologia, como a heráldica pede:
 
-- O escudo é Ibérico, região de origem da minha família --até onde sei.
-- O escudo é coberto por esmaltes nas cores argento e gules, representando o estado de Minas Gerais, onde nasci.
-- O lobo é representa a família Lopes, nome que significa "filho do lobo", derivado do latim, "lupus" (lobo).
+- O escudo é Ibérico, região de origem da minha família.
+- O metal do escudo é ouro --*Or*.
+- O lobo é representa a família Lopes, nome que significa "filho do lobo", derivado do latim, *lupus* (lobo).
 - O pinheiro representa minha família por parte de mãe, com sobrenome homônimo.
-- A rosa representa minha cidade natal, Barbacena, também conhecida como "cidade das rosas".
-- A rosa amarela com folhas verdes representa minha pátria, o Brasil.
+- As montanhas representam Minas Gerais.
+- As flechas representam um aspecto da minha personalidade, reforçado pelo "chevron".
+- O tom dourado com a silhueta da árvore remete aos fins de tarde frios na minha cidade natal, Barbacena.
+- O verde (*Vert*) da grama forma com o dourado as cores da bandeira do Brasil.
 
 Bora!

@@ -2,7 +2,7 @@ base_url = "https://lopes.id"
 theme = "zola.386"
 
 default_language = "en"
-title = "lopes.id"
+title = "lopes"
 description = "Treinado em campo de várzea."
 
 highlight_code = true
@@ -34,7 +34,7 @@ google_analytics = "UA-165100411-1"
 disqus = "lopes-id"
 
 ### SOCIAL MEDIA
-image = "https://lopes.id/images/coa-jose-lopes.png"
+image = "https://lopes.id/images/coa-jlopes.png"
 twitter_user = "lopesoj"
 linkedin_user = "jlopesjr"
 github_user = "lopes"

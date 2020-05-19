@@ -11,6 +11,7 @@ tags = ["oss", "git"]
 
 [extra]
 comments = true
+lang = "pt"
 +++
 
 Fiz o [ZOLA.386](https://github.com/lopes/zola.386) para ser o tema deste site e a ideia era de trabalhar com detalhes de layout lá, ficando aqui só com conteúdo.  Seguindo indicações da comunidade, implementei isso como um submódulo do repositório do site, mas quando atualizei o ZOLA.386, não vi as mudanças aqui.
