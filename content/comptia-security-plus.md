@@ -36,7 +36,7 @@ Tinha marcado a prova para a manhã, então cumpri minha rotina matinal e fui pa
 
 ## Prova
 
-Não posso comentar sobre as questões da prova, porque é um pedido da própria CompTIA, mas gastei mais tempo que o esperado na primeira metade, me obrigando a agilizar as respostas na segunda metade.  Por fim, usei uns cinco minutos extras dos trinta que tinha e aproveitei mais uns dez para revisar rapidamente.  Finalizei a prova em &approx;105' e tive de responder as pesquisas da CompTIA antes de ver o resultado --tortura desnecessária.  Passei com 88%, que é uma média alta, mas eu não gostei do desempenho por ter feito menos de 900 pontos.
+Não posso comentar sobre as questões da prova, porque é um pedido da própria CompTIA, mas gastei mais tempo que o esperado na primeira metade, me obrigando a agilizar as respostas na segunda metade.  Por fim, usei uns cinco minutos extras dos trinta que tinha e aproveitei mais uns dez para revisar rapidamente.  Finalizei a prova em &approx;105' e tive de responder as pesquisas da CompTIA antes de ver o resultado --tortura desnecessária.  Passei com 88%, que é uma média alta, mas eu não gostei do desempenho por ter feito menos de 800 pontos.
 
 No geral, a S+ é uma boa prova, abrangendo quase todas as disciplinas de segurança --acho que faltaram só as mais especializadas ou mais novas, como engenharia reversa e inteligência de ameaças.  O conteúdo não é cobrado em muita profundidade, mas é importante saber como cada solução ou ameaça/vulnerabilidade se relaciona para resolver um problema ou determinar porque um incidente aconteceu.  O que deixa a prova complicada é a média alta para aprovação, que não dá margem para muitos erros.
 
