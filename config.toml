@@ -26,6 +26,7 @@ zola386_menu = [
   {path="", name="Home"},
   {path="categories", name="Categories"},
   {path="tags", name="Tags"},
+  {path="octet", name="Octet"},
   {path="about", name="About"},
 ]
 
