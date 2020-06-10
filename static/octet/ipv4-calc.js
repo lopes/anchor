@@ -37,12 +37,10 @@ function ipv4_dot2int(ip_dot){
     for (var i = 0; i < 4; i++){
         ip_arr.push(parseInt(aux[i]));
     }
-
     for (var i = 0; i < 4; i++){
         ip_int = ip_int << 8;
         ip_int += ip_arr[i];
     }
-
     return ip_int;
 }
 
@@ -59,13 +57,10 @@ function ipv4_int2dot(ip_int){
         ip_arr.push(ip_int & 255);
         ip_int = ip_int >> 8;
     }
-
     ip_arr.reverse();
-
     for (var i = 0; i < 4; i++){
         ip_dot += ip_arr[i] + '.';
     }
-
     return ip_dot.slice(0, -1);
 }
 
@@ -78,9 +73,7 @@ function fill_mask(n){
         ip_mask++;
         if (i != n - 1) { ip_mask = ip_mask << 1; }
     }
-
     ip_mask = ip_mask << (32 - n);
-
     return ip_mask;
 }
 
@@ -192,13 +185,10 @@ function dec2bin(n){
 
     for (var i = 0; i < 4; i++){
         aux = (n & 255).toString(2);
-        
         while (aux.length < 8){ aux = '0' + aux; }
-
         ret = aux + ' ' + ret;
         n = n >> 8;
     }
-
     return ret.slice(0, -1);
 }
 
@@ -237,12 +227,15 @@ function update_interface(p){
 }
 
 function on_input_enter(e){
-    var p = [];
-
     if (e.keyCode == 13){
-        p = parser($('#input-ipmask').val());
-        update_interface(p);
+        on_submit();
     }
+}
+
+function on_submit(){
+    var p = [];
+    p = parser($('#input-ipmask').val());
+    update_interface(p); 
 }
 
 function on_uri_parameter(param){
@@ -253,8 +246,7 @@ function on_uri_parameter(param){
 
 $(document).ready(function(){
     $('#input-ipmask').keypress(on_input_enter);
-    
     if (window.location.search) {
-        on_uri_parameter(window.location.search.replace(/^\?addr=/, ''));
+        on_uri_parameter(window.location.search.replace(/^\?address=/, ''));
     }
 });

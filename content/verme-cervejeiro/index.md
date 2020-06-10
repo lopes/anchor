@@ -6,7 +6,7 @@ draft = false
 slug = "verme-cervejeiro"
 
 [taxonomies]
-categories = ["lifestyle"]
+categories = ["life"]
 tags = ["beer"]
 
 [extra]
