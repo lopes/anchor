@@ -7,7 +7,7 @@ slug = "installing-arch-linux"
 
 [taxonomies]
 categories = ["technology"]
-tags = ["oss", "linux"]
+tags = ["oss", "linux", "arch"]
 
 [extra]
 comments = true
@@ -168,7 +168,11 @@ At this point, you should have a virtual environment running in memory --which y
 ```sh
 genfstab -U /mnt >> /mnt/etc/fstab
 
-echo "tmpfs   /tmp    tmpfs  size=1G,rw,noexec,nodev,nosuid,mode=1700    0    0" >> /mnt/etc/fstab
+echo "tmpfs   /var/tmp tmpfs  size=1G,mode=1777,rw,nodev,nosuid,noexec    0    0" >> /mnt/etc/fstab
+
+echo "tmpfs   /tmp     tmpfs  size=1G,mode=1777,rw,nodev,nosuid,noexec    0    0" >> /mnt/etc/fstab
+
+echo "tmpfs   /dev/shm tmpfs  size=1G,rw,nodev,nosuid,noexec    0    0" >> /mnt/etc/fstab
 
 arch-chroot /mnt
 ```
@@ -260,14 +264,14 @@ vim /etc/mkinitcpio.conf
 # MODULES=(ext4)
 # HOOKS=(...encrypt lvm2 filesystems...)
 
-mkinitcpio -p linux
-
-grub-install /dev/sda
-grub-mkconfig -o /boot/grub/grub.cfg
-
 vim /etc/default/grub
 # GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda2:luks:allow-discards"
 # GRUB_ENABLE_CRYPTODISK=y   # uncomment this
+
+mkinitcpio -p linux
+
+grub-install --target i386-pc --recheck /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 

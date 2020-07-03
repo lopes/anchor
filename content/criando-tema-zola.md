@@ -7,7 +7,7 @@ slug = "criando-tema-zola"
 
 [taxonomies]
 categories = ["technology"]
-tags = ["oss", "review", "zola", "tera", "bootstrap", "web", "dev"]
+tags = ["oss", "review", "zola", "web", "dev"]
 
 [extra]
 comments = true
