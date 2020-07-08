@@ -1,13 +1,13 @@
 +++
 title = "Installing Arch Linux"
 description = "My installation tutorial for Arch Linux, including LVM, FDE, and a couple of things."
-date = 2020-07-03
+date = 2020-07-07
 draft = false
 slug = "installing-arch-linux"
 
 [taxonomies]
 categories = ["technology"]
-tags = ["oss", "linux", "arch"]
+tags = ["oss", "linux", "arch", "security"]
 
 [extra]
 comments = true
@@ -160,20 +160,29 @@ sed -n '/\(Brazil\|United States\)/,+1p' /etc/pacman.d/mirrorlist.bkp > /etc/pac
 Now the system can be installed with the next command --notice that I'm installing additional packages I use, but most users will only want the first three --`base`, `linux`, and `linux-firmware`.
 
 ```sh
-pacstrap /mnt base linux linux-firmware ufw openntpd sudo zsh tmux python atop networkmanager dhcpcd dnsutils wget curl git vim
+pacstrap /mnt base linux linux-firmware \
+    ufw openntpd networkmanager sudo \
+    bash-completion zsh zsh-completions tmux \
+    man vim atop dnsutils wget curl git python
 ```
 
-At this point, you should have a virtual environment running in memory --which you are using to install the system-- and a Linux system installed on the disk mounted in `/mnt`.  To finish the installation, the objective is to chroot `/mnt`, but first the `/etc/fstab` file must be generated and I like to set up `/tmp` as a virtual partition for security reasons.  The next command shows how this can be achieved.
+Now that all files are in place it is time to create the `/etc/fstab` file that will implement the mounted partitions.
 
 ```sh
 genfstab -U /mnt >> /mnt/etc/fstab
+```
 
-echo "tmpfs   /var/tmp tmpfs  size=1G,mode=1777,rw,nodev,nosuid,noexec    0    0" >> /mnt/etc/fstab
+Edit `/etc/fstab` to insert some security options, including a few more transient partitions that will exist only in memory.  First add the `nodev` option in `/home` line, then create the lines below at the end of file.
 
-echo "tmpfs   /tmp     tmpfs  size=1G,mode=1777,rw,nodev,nosuid,noexec    0    0" >> /mnt/etc/fstab
+```sh
+tmpfs /var/tmp tmpfs size=1G,mode=1777,rw,nodev,nosuid,noexec 0 0
+tmpfs /tmp     tmpfs size=1G,mode=1777,rw,nodev,nosuid,noexec 0 0
+tmpfs /dev/shm tmpfs size=1G,rw,nodev,nosuid,noexec           0 0
+```
 
-echo "tmpfs   /dev/shm tmpfs  size=1G,rw,nodev,nosuid,noexec    0    0" >> /mnt/etc/fstab
+At this point, you should have a virtual environment running in memory --which you are using to install the system-- and a Linux system installed on the disk mounted in `/mnt`.  Now just chroot to `/mnt` to create the basic configuration for it.
 
+```sh
 arch-chroot /mnt
 ```
 
@@ -186,29 +195,25 @@ ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
 ```
 
-I do mix `en_US` and `pt_BR` as locales, but always in UTF-8.  To create a similar setup --even if only one locale will be used--, uncomment the language lines in the `/etc/locale.gen` file and generate the locales.  Then, create the configuration file for your system use them --see the next listing.
+I do mix `en_US` and `pt_BR` as locales, but always in UTF-8.  To create a similar setup --even if only one locale will be used--, uncomment the language lines in the `/etc/locale.gen` file and generate the locales.
+
+Generate the locales using the command `locale-gen` and create the `/etc/locale.conf` file using the next listing as example.
 
 ```sh
-vim /etc/locale.gen
-# uncomment desired locales
-
-locale-gen
-
-vim /etc/locale.conf
-# LANG=en_US.UTF-8
-# LANGUAGE=en_US
-# LC_ADDRESS=en_US.UTF-8
-# LC_COLLATE=en_US.UTF-8
-# LC_CTYPE=en_US.UTF-8
-# LC_IDENTIFICATION=en_US.UTF-8
-# LC_MESSAGES=en_US.UTF-8
-# LC_NAME=en_US.UTF-8
-# LC_TELEPHONE=en_US.UTF-8
-# LC_MEASUREMENT=pt_BR.UTF-8
-# LC_MONETARY=pt_BR.UTF-8
-# LC_NUMERIC=pt_BR.UTF-8
-# LC_PAPER=pt_BR.UTF-8
-# LC_TIME=pt_BR.UTF-8
+LANG=en_US.UTF-8
+LANGUAGE=en_US
+LC_ADDRESS=en_US.UTF-8
+LC_COLLATE=en_US.UTF-8
+LC_CTYPE=en_US.UTF-8
+LC_IDENTIFICATION=en_US.UTF-8
+LC_MESSAGES=en_US.UTF-8
+LC_NAME=en_US.UTF-8
+LC_TELEPHONE=en_US.UTF-8
+LC_MEASUREMENT=pt_BR.UTF-8
+LC_MONETARY=pt_BR.UTF-8
+LC_NUMERIC=pt_BR.UTF-8
+LC_PAPER=pt_BR.UTF-8
+LC_TIME=pt_BR.UTF-8
 ```
 
 To configure the keyboard, just create the `/etc/vconsole.conf` file and set the same keyboard layout you are using for the installation --considering you changed the default at the beginning.
@@ -221,29 +226,55 @@ echo "KEYMAP=us-acentos" > /etc/vconsole.conf
 ## Networking
 Networking setup includes creating the hostname files and enabling DHCP service --this last step is not necessary if you pretend to use a static IP approach, but it is up to you.
 
+Start by creating the `/etc/hostname` file with your own setting --see the next command.
+
 ```sh
 echo "orion" > /etc/hostname
+```
 
-vim /etc/hosts
-# 127.0.0.1   localhost
-# ::1         localhost
-# 127.0.1.1   orion.lopes.id  orion
+Add the next lines to the `/etc/hosts` file matching the last line with the name used in the previous command.
 
-systemctl enable dhcpcd
+```sh
+127.0.0.1   localhost
+::1         localhost
+127.0.1.1   orion.lopes.id  orion
+```
+
+Since my hypervisor uses DHCP, makes sense to be sure this service will be enabled after rebooting the system.  I prefer to use the Arch Linux's default network manager, the [systemd-networkd](https://wiki.archlinux.org/index.php/Systemd-networkd).  First create the file `/etc/systemd/network/20-wired.network` and insert the content from the next listing, assuming you are setting up a wired interface named `enp0s3` --you can list all available interfaces with the command `networkctl list`.
+
+```sh
+[Match]
+Name=enp0s3
+
+[Network]
+DHCP=yes
+```
+
+Start and enable the service so it will run after rebooting the system.
+
+```sh
+systemctl start systemd-networkd.service
+systemctl enable systemd-networkd.service
+systemctl status systemd-networkd.service  # just to check if it is ok
 ```
 
 
 ## Users
-This is not a necessary step at all, but the root user should be avoided for security reasons in any operating system.  So, I will create a user (`lopes`) and allow him to use `sudo` --note that my default shell is `zsh`.   Strong passwords must be defined for both users.
+This is not a necessary step at all, but the root user should be avoided for security reasons in any operating system.  So, I will create a user (`lopes`) and allow him to use Sudo --note that my default shell is `zsh`.   Strong passwords must be defined for both users.
+
+The next commands show how to set the password for root and create your own user.
 
 ```sh
 passwd  # set root password
 
 useradd -m -G wheel,audio,video,optical,storage -s /bin/zsh lopes
 passwd lopes
+```
 
-visudo
-# uncomment this line: "%wheel ALL=(ALL) ALL"
+Use the `visudo` command to open the Sudo's configuration file, then find and uncomment the line below.
+
+```sh
+%wheel ALL=(ALL) ALL
 ```
 
 
@@ -253,21 +284,34 @@ The last step is to install and configure the boot loader, ensuring that the LVM
 ### GRUB
 After installing the package, it must be installed in the boot device and configuration must be created.  Then, the default configuration file must be changed because the variable `GRUB_CMDLINE_LINUX` should contain the command line to load the encrypted device and the variable `GRUB_ENABLE_CRYPTODISK` must be set to "yes".
 
-### mkinitcpio
-This Arch script must be properly configured to support the file systems, so module `ext4` should be loaded and hooks `encrypt` and `lvm2` must be loaded before `filesystems`.
-
+Two packages must be installed before proceeding, so run the next commando to do it.
 
 ```sh
 pacman -S grub lvm2
+```
 
-vim /etc/mkinitcpio.conf
-# MODULES=(ext4)
-# HOOKS=(...encrypt lvm2 filesystems...)
+### mkinitcpio
+This Arch script must be properly configured to support the file systems, so module `ext4` should be loaded and hooks `encrypt` and `lvm2` must be loaded before `filesystems`.  Open the `/etc/mkinitcpio.conf` file in a text editor and add the `ext4` in the modules line.  Then, find the hooks line and add the modules `encryption` and `lvm2` before the `filesystems`, as shown in the next listing.
 
-vim /etc/default/grub
-# GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda2:luks:allow-discards"
-# GRUB_ENABLE_CRYPTODISK=y   # uncomment this
 
+```sh
+...
+MODULES=(ext4)
+...
+HOOKS=(...encrypt lvm2 filesystems...)
+...
+```
+
+Open GRUB's `/etc/default/grub` file, add the encryption settings to the `GRUB_CMDLINE_LINUX` and uncomment the `GRUB_ENABLE_CRYPTODISK` line as in the next listing.
+
+```sh
+GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda2:luks:allow-discards"
+GRUB_ENABLE_CRYPTODISK=y   # uncomment this line
+```
+
+Now, execute the commands below to recreate the initial ramdisk environment with all the necessary supports and to create the GRUB's configuration files.
+
+```sh
 mkinitcpio -p linux
 
 grub-install --target i386-pc --recheck /dev/sda
@@ -295,3 +339,5 @@ Let's rock and roll in Arch!
 * [Arch Linux's Official Installation Guide](https://wiki.archlinux.org/index.php/installation_guide)
 * [Arch Linux's Device Encryption](https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
 * [Arch Linux's Encrypting an Entire Device](https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system)
+* [Arch Linux's Mkinitcpio](https://wiki.archlinux.org/index.php/Mkinitcpio)
+* [Arch Linux's systemd-networkd](https://wiki.archlinux.org/index.php/Systemd-networkd)
