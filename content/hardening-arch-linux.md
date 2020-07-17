@@ -74,7 +74,7 @@ Remake the GRUB's configuration file --`/boot/grub/grub.cfg`-- using the next co
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-Find the menu entry for Arch Linux's default boot and insert the `--unrestricted` option right after the 'Arch Linux' string to avoid typing GRUB's user and password at every boot.  This line will look like `menuentry 'Arch Linux' --unrestricted --class arch...`.
+Find the menu entry for Arch Linux's default boot --`/boot/grub/grub.cfg`-- and insert the `--unrestricted` option right after the 'Arch Linux' string to avoid typing GRUB's user and password at every boot.  This line will look like `menuentry 'Arch Linux' --unrestricted --class arch...`.
 
 
 ## Firewall

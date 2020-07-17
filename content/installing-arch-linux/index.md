@@ -23,13 +23,21 @@ This text will consider the installation in a VirtualBox VM.
 ## Installer Setup
 Assuming you already have the official ISO, create a new VM in VirtualBox with the following characteristics --or very similar:
 
-- CPU: 2
+System:
+- CPU: 1
 - RAM: 4096 MB
+- Enable EFI
+
+Display:
+- Video memory: 128MB
+
+Storage:
 - Disk: 16 GB (dynamically allocated)
-- A single network card with default settings
 - ISO inserted in a virtual drive
 
-Turning the VM on should load the ISO and present the shell, which is the installation's start point.  The first thing to do is to prepare this installation environment, assuring that the keyboard and connectivity are properly configured.
+Turning the VM on should load the ISO and present the shell, which is the installation's start point --using the EFI mode, it took ~ 2' for the shell appearing.
+
+The first thing to do is to prepare this installation environment, assuring that the keyboard and connectivity are properly configured.
 
 ### Keyboard
 In my case, I use a US keyboard, but it is essential for me to use Latin characters, such as àêíöú --if this set of characters isn't necessary, this step is needless.  The commands below helped me to find candidates to layout and apply the correct one:
@@ -64,11 +72,11 @@ The main goal here is to create only a minimum bootable unencrypted partition an
 
 | Mount point | Partition | Size   | File system |
 |-------------|-----------|--------|-------------|
-| `/efi`\*    | primary   | 550 MB | FAT32       |
+| `/efi`      | primary   | 550 MB | FAT32       |
 | `/boot`     | primary   | 450 MB | EXT4        |
 | LVM         | primary   | Rest   | LVM         |
 
-> **Note:** on the physical system using [UEFI](https://en.wikipedia.org/wiki/Unified_Extensible_Firmware_Interface), it is necessary to create another partition to mount the `/efi` directory and this partition must be formatted using FAT32 --personally, I recommend to allocate 550 MB for it.
+> **Note:** when using [EFI](https://en.wikipedia.org/wiki/Unified_Extensible_Firmware_Interface), it is necessary to create another partition to mount the `/efi` directory and this partition must be formatted using FAT32 --personally, I recommend to allocate 550 MB for it.
 
 You can use `cfdisk` for partitioning, but this tutorial will present the `fdisk` commands.  
 
@@ -78,6 +86,7 @@ fdisk -l         # list the available disks
 fdisk /dev/sda   # start partitioning /dev/sda
 
 # inside fdisk...
+n > p > default > default > +550M    # [n]ew [p]rimary partition with 550 MB
 n > p > default > default > +450M    # [n]ew [p]rimary partition with 450 MB
 n > p > default > default > default  # [n]ew [p]rimary partition with the left space
 w                                    # [w]rite changes and exit
@@ -89,9 +98,9 @@ w                                    # [w]rite changes and exit
 The second command will open this newly encrypted partition as a new device in `/dev/mapper/luks`.
 
 ```sh
-cryptsetup -v --type luks --cipher aes-xts-plain64 --key-size 256 --hash sha256 --iter-time 2000 --use-urandom --verify-passphrase luksFormat /dev/sda2
+cryptsetup -v --type luks --cipher aes-xts-plain64 --key-size 256 --hash sha256 --iter-time 2000 --use-urandom --verify-passphrase luksFormat /dev/sda3
 
-cryptsetup luksOpen /dev/sda2 luks
+cryptsetup luksOpen /dev/sda3 luks
 ```
 
 ### LVM
@@ -123,7 +132,8 @@ With all partitions in place, they should be formatted as previously planned.  T
 
 ```sh
 mkswap /dev/mapper/vg0-swap
-mkfs.ext4 /dev/sda1
+mkfs.fat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2
 mkfs.ext4 /dev/mapper/vg0-root
 mkfs.ext4 /dev/mapper/vg0-home
 mkfs.ext4 /dev/mapper/vg0-var
@@ -138,10 +148,12 @@ Finally, all partitions must be mounted, including those inside the root partiti
 swapon /dev/mapper/vg0-swap
 
 mount /dev/mapper/vg0-root /mnt
-
 mkdir /mnt/{boot,home,var}
 
-mount /dev/sda1 /mnt/boot
+mount /dev/sda2 /mnt/boot
+mkdir /mnt/boot/efi
+
+mount /dev/sda1 /mnt/boot/efi
 mount /dev/mapper/vg0-home /mnt/home
 mount /dev/mapper/vg0-var /mnt/var
 ```
@@ -161,9 +173,9 @@ Now the system can be installed with the next command --notice that I'm installi
 
 ```sh
 pacstrap /mnt base linux linux-firmware \
-    ufw openntpd networkmanager sudo \
+    ufw sudo man atop unzip unrar \
     bash-completion zsh zsh-completions tmux \
-    man vim atop dnsutils wget curl git python
+    vim dnsutils wget curl git python
 ```
 
 Now that all files are in place it is time to create the `/etc/fstab` file that will implement the mounted partitions.
@@ -250,12 +262,17 @@ Name=enp0s3
 DHCP=yes
 ```
 
-Start and enable the service so it will run after rebooting the system.
+Enable the service so it will run after rebooting the system.
 
 ```sh
-systemctl start systemd-networkd.service
 systemctl enable systemd-networkd.service
-systemctl status systemd-networkd.service  # just to check if it is ok
+```
+
+Add Google DNSs in `/etc/resolv.conf`.
+
+```sh
+nameserver 8.8.8.8
+nameserver 8.8.4.4
 ```
 
 
@@ -287,7 +304,7 @@ After installing the package, it must be installed in the boot device and config
 Two packages must be installed before proceeding, so run the next commando to do it.
 
 ```sh
-pacman -S grub lvm2
+pacman -S grub efibootmgr lvm2
 ```
 
 ### mkinitcpio
@@ -305,17 +322,31 @@ HOOKS=(...encrypt lvm2 filesystems...)
 Open GRUB's `/etc/default/grub` file, add the encryption settings to the `GRUB_CMDLINE_LINUX` and uncomment the `GRUB_ENABLE_CRYPTODISK` line as in the next listing.
 
 ```sh
-GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda2:luks:allow-discards"
+GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards"
 GRUB_ENABLE_CRYPTODISK=y   # uncomment this line
 ```
 
-Now, execute the commands below to recreate the initial ramdisk environment with all the necessary supports and to create the GRUB's configuration files.
+Now, execute the commands below to recreate the initial ramdisk environment with all the necessary support and to create the GRUB's configuration files.
 
 ```sh
 mkinitcpio -p linux
 
-grub-install --target i386-pc --recheck /dev/sda
+grub-install --target x86_64-efi --bootloader-id arch --efi-directory /boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+The next listing demonstrates how to configure EFI fallback.
+
+```sh
+mkdir /boot/efi/EFI/boot
+cp /boot/efi/EFI/arch/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
+```
+
+Create the file `/boot/efi/startup.nsh` and insert the lines from the next listing there.
+
+```sh
+bcf boot add 1 fs0:\EFI\arch\grubx64.efi "Orion Bootloader"
+exit
 ```
 
 
@@ -336,8 +367,9 @@ Let's rock and roll in Arch!
 
 ## References
 
-* [Arch Linux's Official Installation Guide](https://wiki.archlinux.org/index.php/installation_guide)
-* [Arch Linux's Device Encryption](https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
-* [Arch Linux's Encrypting an Entire Device](https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system)
-* [Arch Linux's Mkinitcpio](https://wiki.archlinux.org/index.php/Mkinitcpio)
-* [Arch Linux's systemd-networkd](https://wiki.archlinux.org/index.php/Systemd-networkd)
+- [Arch Linux's Official Installation Guide](https://wiki.archlinux.org/index.php/installation_guide)
+- [Arch Linux's Device Encryption](https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
+- [Arch Linux's Encrypting an Entire Device](https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system)
+- [Arch Linux's Mkinitcpio](https://wiki.archlinux.org/index.php/Mkinitcpio)
+- [Arch Linux's EFI System Partition](https://wiki.archlinux.org/index.php/EFI_system_partition)
+- [Arch Linux's systemd-networkd](https://wiki.archlinux.org/index.php/Systemd-networkd)
