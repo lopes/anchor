@@ -24,7 +24,6 @@ This text will consider the installation in a VirtualBox VM.
 Assuming you already have the official ISO, create a new VM in VirtualBox with the following characteristics --or very similar:
 
 System:
-- CPU: 1
 - RAM: 4096 MB
 - Enable EFI
 
@@ -33,7 +32,7 @@ Display:
 
 Storage:
 - Disk: 16 GB (dynamically allocated)
-- ISO inserted in a virtual drive
+- [Installation media](https://www.archlinux.org/download) in a virtual drive
 
 Turning the VM on should load the ISO and present the shell, which is the installation's start point --using the EFI mode, it took ~ 2' for the shell appearing.
 
@@ -173,9 +172,9 @@ Now the system can be installed with the next command --notice that I'm installi
 
 ```sh
 pacstrap /mnt base linux linux-firmware \
-    ufw sudo man atop unzip unrar \
+    ufw sudo man atop p7zip zip unzip unarchiver \
     bash-completion zsh zsh-completions tmux \
-    vim dnsutils wget curl git python
+    vim dnsutils mtr wget curl git python
 ```
 
 Now that all files are in place it is time to create the `/etc/fstab` file that will implement the mounted partitions.
@@ -351,7 +350,7 @@ exit
 
 
 ## Reboot
-The system must be fully functional at this point, so it is time to turn the media install off and boot the installed system.  Run the following commands to get out from the chroot environment, guarantee that the disk is properly unmounted, and reboot the system --remember to remove the media installation before the new boot.
+The system must be fully functional at this point, so it is time to remove the installation media and boot the system.  Run the following commands to get out from the chroot environment, make sure that the disk is properly unmounted, and reboot the system.
 
 ```sh
 exit
