@@ -28,18 +28,18 @@ The first thing here is to create a directory to house your downloaded fonts and
 mkdir fonts; cd fonts
 
 # to install all fonts
-curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest| egrep -o "/ryanoasis/nerd-fonts/releases/download/.+\.zip" | sed 's/^/https:\/\/github.com/' | wget -i/dev/fd/0
+curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest | egrep -o "/ryanoasis/nerd-fonts/releases/download/.+\.zip" | sed 's/^/https:\/\/github.com/' | wget -i/dev/fd/0
 
 # to download a list and pick only the ones you like
-curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest| egrep -o "/ryanoasis/nerd-fonts/releases/download/.+\.zip" | sed 's/^/https:\/\/github.com/' > list.txt
+curl -sL https://github.com/ryanoasis/nerd-fonts/releases/latest | egrep -o "/ryanoasis/nerd-fonts/releases/download/.+\.zip" | sed 's/^/https:\/\/github.com/' > list.txt
 vim list.txt       # edit the list to remove undesired fonts
-wget -L list.txt
+wget -i list.txt
 ```
 
 Having all the fonts locally, unzip them into the local fonts directory, update the cache files for allow applications to use the new fonts, and clean everything --if you want to make a system-wide installation unzip in `/usr/local/share/fonts`.
 
 ```sh
-unzip '*.zip' -d ~/.local/share/fonts
+unzip "*.zip" -d ~/.local/share/fonts
 fc-cache -fv
 cd ..; rm -rf fonts
 ```
